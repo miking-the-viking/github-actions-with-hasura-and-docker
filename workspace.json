@@ -57,6 +57,112 @@
           }
         }
       }
+    },
+    "web-ui": {
+      "root": "apps/web-ui",
+      "sourceRoot": "apps/web-ui/src",
+      "projectType": "application",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/web:build",
+          "options": {
+            "outputPath": "dist/apps/web-ui",
+            "index": "apps/web-ui/src/index.html",
+            "main": "apps/web-ui/src/main.tsx",
+            "polyfills": "apps/web-ui/src/polyfills.ts",
+            "tsConfig": "apps/web-ui/tsconfig.app.json",
+            "assets": ["apps/web-ui/src/favicon.ico", "apps/web-ui/src/assets"],
+            "styles": [],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/web-ui/src/environments/environment.ts",
+                  "with": "apps/web-ui/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "web-ui:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "web-ui:build:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "apps/web-ui/.eslintrc",
+            "tsConfig": [
+              "apps/web-ui/tsconfig.app.json",
+              "apps/web-ui/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/web-ui/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/web-ui/jest.config.js",
+            "tsConfig": "apps/web-ui/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "web-ui-e2e": {
+      "root": "apps/web-ui-e2e",
+      "sourceRoot": "apps/web-ui-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/web-ui-e2e/cypress.json",
+            "tsConfig": "apps/web-ui-e2e/tsconfig.e2e.json",
+            "devServerTarget": "web-ui:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "web-ui:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "apps/web-ui-e2e/.eslintrc",
+            "tsConfig": ["apps/web-ui-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/web-ui-e2e/**"]
+          }
+        }
+      }
     }
   },
   "cli": {
@@ -75,9 +181,15 @@
     },
     "@nrwl/react": {
       "application": {
-        "linter": "eslint"
+        "style": "none",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "none"
       },
       "library": {
+        "style": "none",
         "linter": "eslint"
       }
     },
