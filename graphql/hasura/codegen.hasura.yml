@@ -1,0 +1,12 @@
+overwrite: true
+schema: 'http://localhost:8081/v1/graphql'
+documents: '**/graphql/hasura/*.graphql'
+generates:
+  ./apps/api/hasura-graphql.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-graphql-request
+  ./apps/api/hasura-graphql.schema.json:
+    plugins:
+      - 'introspection'

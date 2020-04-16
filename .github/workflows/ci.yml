@@ -1,0 +1,40 @@
+name: 'Basic Hasura/Postgres/NestJs CI'
+on: push
+jobs:
+  Build-and-Test-GitHub-Hosted:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: bahmutov/npm-install@v1
+      - name: Build the stack
+        env: # Set env using GitHub Secrets
+          HASURA_GRAPHQL_DATABASE_URL: ${{ secrets.HASURA_GRAPHQL_DATABASE_URL }}
+          HASURA_GRAPHQL_ENABLE_CONSOLE: ${{ secrets.HASURA_GRAPHQL_ENABLE_CONSOLE }}
+          HASURA_GRAPHQL_ENABLED_LOG_TYPES: ${{ secrets.HASURA_GRAPHQL_ENABLED_LOG_TYPES }}
+          HASURA_GRAPHQL_MIGRATIONS_DIR: ${{ secrets.HASURA_GRAPHQL_MIGRATIONS_DIR }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        run: docker-compose up -d
+      - name: Migrate Hasura Schema
+        run: yarn hasura:migrate
+      - name: Test api
+        run: yarn test api
+  Build-and-Test-Self-Hosted:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v2
+      - uses: bahmutov/npm-install@v1
+      - name: Build the stack
+        env: # Set env using GitHub Secrets
+          HASURA_GRAPHQL_DATABASE_URL: ${{ secrets.HASURA_GRAPHQL_DATABASE_URL }}
+          HASURA_GRAPHQL_ENABLE_CONSOLE: ${{ secrets.HASURA_GRAPHQL_ENABLE_CONSOLE }}
+          HASURA_GRAPHQL_ENABLED_LOG_TYPES: ${{ secrets.HASURA_GRAPHQL_ENABLED_LOG_TYPES }}
+          HASURA_GRAPHQL_MIGRATIONS_DIR: ${{ secrets.HASURA_GRAPHQL_MIGRATIONS_DIR }}
+          HASURA_ENDPOINT: ${{ secrets.HASURA_ENDPOINT }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        run: docker-compose up -d
+      - name: Migrate Hasura Schema
+        run: yarn hasura:migrate
+      - name: Test api
+        run: yarn test api --verbose

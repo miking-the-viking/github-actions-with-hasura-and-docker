@@ -1,0 +1,18 @@
+# Database
+export DB_USER=prisma
+export DB_PASSWORD=prisma
+export DB_HOST=postgres
+export DB_PORT=5432
+export DB_NAME=prisma
+
+# Hasura
+export HASURA_GRAPHQL_DATABASE_URL=postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+export HASURA_GRAPHQL_ENABLE_CONSOLE=true
+export HASURA_GRAPHQL_ENABLED_LOG_TYPES='startup, http-log, webhook-log, websocket-log, query-log'
+export HASURA_GRAPHQL_MIGRATIONS_DIR=$PWD/hasura/migrations
+export HASURA_ENDPOINT=http://localhost:8081/v1/graphql
+
+# GitHub Actions
+export GITHUB_ACTIONS_AGENT_TOKEN=asdfasdflkhsadkjfhasdf
+export GITHUB_REPOSITORY_URL=https://github.com/my-github-username/my-github-repository-name
+

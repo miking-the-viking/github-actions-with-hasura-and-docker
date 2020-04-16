@@ -1,0 +1,18 @@
+query User($userId: uuid!) {
+  users_by_pk(id: $userId) {
+    email
+    id
+    created_at
+    updated_at
+  }
+}
+
+query UserByEmail($email: String!) {
+  users(distinct_on: email, limit: 1, where: { email: { _eq: $email } }) {
+    id
+    created_at
+    email
+    password
+    updated_at
+  }
+}

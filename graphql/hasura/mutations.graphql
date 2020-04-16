@@ -1,0 +1,22 @@
+mutation CreateUser($email: String!, $password: String!) {
+  insert_users(objects: { email: $email, password: $password }) {
+    affected_rows
+    returning {
+      id
+      email
+      created_at
+    }
+  }
+}
+
+mutation DeleteUserById($id: uuid!) {
+  delete_users(where: { id: { _eq: $id } }) {
+    affected_rows
+    returning {
+      email
+      created_at
+      updated_at
+      id
+    }
+  }
+}
