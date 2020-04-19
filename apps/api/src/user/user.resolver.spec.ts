@@ -18,7 +18,6 @@ const fakeUserResult: User & { password: string } = {
 
 describe('UserResolver', () => {
   let resolver: UserResolver;
-  let user = null;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({

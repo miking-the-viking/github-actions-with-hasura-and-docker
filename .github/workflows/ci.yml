@@ -1,5 +1,5 @@
-name: 'Basic Hasura/Postgres/NestJs CI'
-on: push
+name: 'Basic Hasura/Postgres/NestJs/React CI'
+on: [push, pull_request]
 jobs:
   Build-and-Test-GitHub-Hosted:
     runs-on: ubuntu-latest
@@ -14,11 +14,22 @@ jobs:
           HASURA_GRAPHQL_MIGRATIONS_DIR: ${{ secrets.HASURA_GRAPHQL_MIGRATIONS_DIR }}
           DB_USER: ${{ secrets.DB_USER }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        run: docker-compose up -d
+        run: yarn up:ci
+      - name: api Passes Lint Check
+        run: yarn lint api
+      # - name: web-ui Passes Lint Check
+      #   run: yarn lint web-ui
+      - name: Run UI Tests
+        run: yarn test web-ui
       - name: Migrate Hasura Schema
-        run: yarn hasura:migrate
+        run: yarn hasura:migrate:ci
       - name: Test api
+        env:
+          HASURA_ENDPOINT: ${{ secrets.HASURA_ENDPOINT }}
         run: yarn test api
+      - name: Teardown Stack
+        if: always()
+        run: yarn down:ci
   Build-and-Test-Self-Hosted:
     runs-on: self-hosted
     steps:
@@ -33,8 +44,19 @@ jobs:
           HASURA_ENDPOINT: ${{ secrets.HASURA_ENDPOINT }}
           DB_USER: ${{ secrets.DB_USER }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        run: docker-compose up -d
+        run: yarn up:ci
+      - name: api Passes Lint Check
+        run: yarn lint api
+      # - name: web-ui Passes Lint Check
+      #   run: yarn lint web-ui
+      - name: Run UI Tests
+        run: yarn test web-ui
       - name: Migrate Hasura Schema
-        run: yarn hasura:migrate
+        run: yarn hasura:migrate:ci
       - name: Test api
+        env:
+          HASURA_ENDPOINT: ${{ secrets.HASURA_ENDPOINT }}
         run: yarn test api --verbose
+      - name: Teardown Stack
+        if: always()
+        run: yarn down:ci

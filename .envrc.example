@@ -13,9 +13,11 @@ export HASURA_GRAPHQL_MIGRATIONS_DIR=$PWD/hasura/migrations
 export HASURA_ENDPOINT=http://localhost:8081/v1/graphql
 
 # GitHub Actions
+
+export GITHUB_API_TOKEN=skoobydoobydoo # Fill me in
+export GITHUB_USERNAME=miking-the-viking # Fill me in
+export GITHUB_REPOSITORY=github-actions-with-hasura-and-docker # Fill me in
+
+# Automatically configured
+export GITHUB_REPOSITORY_URL=https://github.com/${GITHUB_USERNAME}/${GITHUB_REPOSITORY}
 export GITHUB_ACTIONS_AGENT_TOKEN=asdfasdflkhsadkjfhasdf
-export GITHUB_REPOSITORY_URL=https://github.com/my-github-username/my-github-repository-name
-export GITHUB_USERNAME=miking-the-viking
-export GITHUB_REPOSITORY=github-actions-with-hasura-and-docker
-# ADD THE API TOKEN TO ALLOW FOR AUTOMATIC RUNNER TOKEN RETRIEVAL
-export GITHUB_API_TOKEN=skoobydoobydoo

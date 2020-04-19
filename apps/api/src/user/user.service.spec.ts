@@ -41,7 +41,7 @@ describe('UserService', () => {
           createUserMutationVariableFactory({ email: existing.email })
         )
       ).rejects.toThrow(
-        `Uniqueness violation. duplicate key value violates unique constraint \"users_email_key\"`
+        `Uniqueness violation. duplicate key value violates unique constraint "users_email_key"`
       );
     });
 

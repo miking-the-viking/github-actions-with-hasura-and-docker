@@ -24,7 +24,7 @@ export class GqlAuthGuard extends AuthGuard('jwt') {
 
   async canActivate(context: ExecutionContext) {
     const request = this.getRequest(context);
-    let authString =
+    const authString =
       request.headers.authorization || request.headers.Authorization;
     if (!authString) throw new UnauthorizedException();
     const bearerToken = authString.replace('Bearer ', '');

@@ -21,6 +21,13 @@
   "projects": {
     "api": {
       "tags": []
+    },
+    "web-ui": {
+      "tags": []
+    },
+    "web-ui-e2e": {
+      "tags": [],
+      "implicitDependencies": ["web-ui"]
     }
   }
 }

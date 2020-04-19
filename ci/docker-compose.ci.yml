@@ -1,0 +1,26 @@
+version: '3'
+services:
+  graphql-engine-ci:
+    image: hasura/graphql-engine:v1.1.0
+    ports:
+      - '8082:8080'
+    depends_on:
+      - 'postgres-ci'
+    restart: always
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: ${HASURA_GRAPHQL_DATABASE_URL}
+      HASURA_GRAPHQL_ENABLE_CONSOLE: '${HASURA_GRAPHQL_ENABLE_CONSOLE}' # set to "false" to disable console
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: ${HASURA_GRAPHQL_ENABLED_LOG_TYPES}
+      HASURA_GRAPHQL_MIGRATIONS_DIR: ${HASURA_GRAPHQL_MIGRATIONS_DIR}
+      ## uncomment next line to set an admin secret
+      # HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
+  postgres-ci:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres-ci:/var/lib/postgresql/data
+volumes:
+  postgres-ci:

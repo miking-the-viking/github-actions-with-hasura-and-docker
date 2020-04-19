@@ -26,13 +26,17 @@
     "help": "nx help",
     "hasura:status": "cd hasura && hasura migrate status --skip-update-check",
     "hasura:migrate": "cd hasura && hasura migrate apply",
+    "hasura:migrate:ci": "cd hasura && hasura migrate apply --endpoint=http://localhost:8082",
     "hasura:console": "cd hasura && hasura console",
     "hasura:generate": "graphql-codegen --config ./graphql/hasura/codegen.hasura.yml",
     "up": "docker-compose up -d",
     "down": "docker-compose down",
+    "up:ci": "docker-compose -f ./ci/docker-compose.ci.yml up -d",
+    "down:ci": "docker-compose -f ./ci/docker-compose.ci.yml down -v --remove-orphans",
     "api:generate": "graphql-codegen --config ./graphql/api/codegen.api.yml",
     "actions:create-token": "ts-node -P ./tsconfig.ci.json ./ci/create-token.ts",
-    "actions:agent": "docker build -t actions-agent --build-arg GITHUB_ACTIONS_AGENT_TOKEN=$GITHUB_ACTIONS_AGENT_TOKEN --build-arg GITHUB_REPOSITORY_URL=$GITHUB_REPOSITORY_URL -f agent-container.dockerfile . && docker run -v /var/run/docker.sock:/var/run/docker.sock --net=host -it actions-agent"
+    "actions:agent": "docker build -t actions-agent --build-arg GITHUB_ACTIONS_AGENT_TOKEN=$GITHUB_ACTIONS_AGENT_TOKEN --build-arg GITHUB_REPOSITORY_URL=$GITHUB_REPOSITORY_URL -f ./ci/agent-container.dockerfile . && docker run -v /var/run/docker.sock:/var/run/docker.sock --net=host -it actions-agent",
+    "actions:total": "yarn actions:create-token && direnv allow && yarn actions:agent"
   },
   "private": true,
   "dependencies": {
@@ -48,7 +52,11 @@
     "jsonwebtoken": "^8.5.1",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
-    "reflect-metadata": "^0.1.13"
+    "reflect-metadata": "^0.1.13",
+    "document-register-element": "1.13.1",
+    "react": "16.12.0",
+    "react-dom": "16.12.0",
+    "react-router-dom": "5.1.2"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.13.2",
@@ -65,7 +73,7 @@
     "@nrwl/nest": "^9.2.2",
     "@nrwl/node": "9.2.2",
     "@nrwl/nx": "^7.8.7",
-    "@nrwl/react": "^9.2.2",
+    "@nrwl/react": "9.2.2",
     "@nrwl/workspace": "^9.2.2",
     "@types/jest": "25.1.4",
     "@types/node": "~8.9.4",
@@ -83,6 +91,13 @@
     "ts-jest": "25.2.1",
     "ts-node": "~7.0.0",
     "tslint": "~6.0.0",
-    "typescript": "~3.8.3"
+    "typescript": "~3.8.3",
+    "cypress": "^4.1.0",
+    "@nrwl/cypress": "9.2.2",
+    "@nrwl/web": "9.2.2",
+    "@types/react": "16.9.17",
+    "@types/react-dom": "16.9.4",
+    "@testing-library/react": "9.4.0",
+    "@types/react-router-dom": "5.1.3"
   }
 }
