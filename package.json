@@ -31,6 +31,7 @@
     "up": "docker-compose up -d",
     "down": "docker-compose down",
     "api:generate": "graphql-codegen --config ./graphql/api/codegen.api.yml",
+    "actions:create-token": "ts-node -P ./tsconfig.ci.json ./ci/create-token.ts",
     "actions:agent": "docker build -t actions-agent --build-arg GITHUB_ACTIONS_AGENT_TOKEN=$GITHUB_ACTIONS_AGENT_TOKEN --build-arg GITHUB_REPOSITORY_URL=$GITHUB_REPOSITORY_URL -f agent-container.dockerfile . && docker run -v /var/run/docker.sock:/var/run/docker.sock --net=host -it actions-agent"
   },
   "private": true,
@@ -77,6 +78,7 @@
     "hasura-cli": "^1.1.1",
     "jest": "25.2.3",
     "prettier": "1.19.1",
+    "replace-in-file": "^5.0.2",
     "supertest": "^4.0.2",
     "ts-jest": "25.2.1",
     "ts-node": "~7.0.0",

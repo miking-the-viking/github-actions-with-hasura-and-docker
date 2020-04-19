@@ -40,7 +40,7 @@ FROM RunnerSetupBuild AS RunnerConfigurationAndExecutionBuild
 ARG GITHUB_ACTIONS_AGENT_TOKEN=NotAValidKey
 ENV AGENT_TOKEN=$GITHUB_ACTIONS_AGENT_TOKEN
 
-ARG GITHUB_REPOSITORY_URL=miking-the-viking/game-of-git
+ARG GITHUB_REPOSITORY_URL=miking-the-viking/github-actions-with-hasura-and-docker
 ENV REPOSITORY_URL=$GITHUB_REPOSITORY_URL
 
 

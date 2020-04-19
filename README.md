@@ -45,3 +45,7 @@ The CI approach is Containerized Hasura/Postgres using an Nx Monorepo with a sam
 - There's no need to only use the self-hosted or github-hosted runners, it is definitely possible to run both jobs concurrently. Play around!
 - This can definitely be improved upon.
 - I haven't figured out a good update path for the Agent... it self updates but exits the container on completion. This necessitates all instances of the version string with the new version in the `agent-container.dockerfile`. I've introduced an optional `GITHUB_ACTIONS_AGENT_VERSION` build arg that can be used to override the default agent version in the dockerfile.
+
+## Optional Bonus
+
+If you have added an API key to your GitHub account, you can use it to automatically retrieve and update the `.envrc`'s self-runner token by running `yarn actions:create-token`.
