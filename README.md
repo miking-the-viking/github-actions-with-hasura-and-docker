@@ -88,5 +88,3 @@ If you want to use the Self Hosted option,
 - There's no need to only use the self-hosted or github-hosted runners, it is definitely possible to run both jobs concurrently. Play around!
 - This can definitely be improved upon. Submit your ideas!
 - I haven't figured out a good update path for the Agent... it self updates but exits the container on completion. This necessitates all instances of the version string with the new version in the `agent-container.dockerfile`. I've introduced an optional `GITHUB_ACTIONS_AGENT_VERSION` build arg that can be used to override the default agent version in the dockerfile. Please let me know if you know an easy solution to this problem that's less manual!
-
-test
