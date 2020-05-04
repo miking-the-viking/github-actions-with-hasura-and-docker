@@ -1,11 +1,11 @@
 version: '3'
 services:
   graphql-engine:
-    image: hasura/graphql-engine:v1.1.0
+    image: hasura/graphql-engine:v1.2.0
     ports:
       - '8081:8080'
     depends_on:
-      - 'postgres-sample'
+      - 'postgres'
     restart: always
     environment:
       HASURA_GRAPHQL_DATABASE_URL: ${HASURA_GRAPHQL_DATABASE_URL}
@@ -14,9 +14,11 @@ services:
       HASURA_GRAPHQL_MIGRATIONS_DIR: ${HASURA_GRAPHQL_MIGRATIONS_DIR}
       ## uncomment next line to set an admin secret
       # HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
-  postgres-sample:
+  postgres:
     image: postgres
     restart: always
+    ports:
+      - '5432:5432'
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
